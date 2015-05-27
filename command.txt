@@ -1,0 +1,2 @@
+mvn archetype:generate -DgroupId=com.satish -DartifactId=annotatedApp -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false
+

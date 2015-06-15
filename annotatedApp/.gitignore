@@ -1,1 +1,7 @@
 .class
+.classpath
+.settings
+.project
+bin
+target
+bower_components

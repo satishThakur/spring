@@ -11,6 +11,8 @@ public interface ContactsService {
 	public List<Contact> queryContacts(String query);
 	
 	public Contact getContactById(long id);
+
+	List<Contact> queryAllContacts(List<String> names);
 	
 
 }

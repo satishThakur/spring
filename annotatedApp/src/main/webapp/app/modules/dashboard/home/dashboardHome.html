@@ -1,0 +1,91 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                <small>Inventory Overview</small>
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <single-stat-box panel-style="['panel','panel-primary']" stats="allStats.rds.count" name="RDS Instances"
+                         state="home" style="['fa','fa-database','fa-5x']"></single-stat-box>
+
+        <single-stat-box panel-style="['panel','panel-green']" stats="allStats.ec2.count" name="EC2 Instances"
+                         state="home" style="['fa','fa-tasks','fa-5x']"></single-stat-box>
+
+        <single-stat-box panel-style="['panel','panel-yellow']" stats="allStats.elb.count" name="ELB Instances"
+                         state="home" style="['fa','fa-arrows','fa-5x']"></single-stat-box>
+
+        <single-stat-box panel-style="['panel','panel-red']" stats="allStats.s3.count" name="S3 Instances"
+                         state="home" style="['fa','fa-bitbucket','fa-5x']"></single-stat-box>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> History</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="line" class="chart chart-line" data="data"
+                            labels="labels" legend="true" series="series"
+                            click="onClick"  height="50">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i> Resource Distribution Per region</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                    <span>RDS Per Region</span>
+                                </div>
+                                <canvas id="pie" class="chart chart-pie" data="rdsData"
+                                        labels="rdsLabels"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                    <span>EC2 Per Region</span>
+                                </div>
+                                <canvas id="pie1" class="chart chart-pie" data="ec2Data"
+                                        labels="ec2Labels"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                    <span>ELB Per Region</span>
+                                </div>
+                                <canvas id="pie2" class="chart chart-pie" data="elbData"
+                                        labels="elbLabels"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                    <span>S3 Per Region</span>
+                                </div>
+                                <canvas id="pie3" class="chart chart-pie" data="s3Data"
+                                        labels="s3Labels"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

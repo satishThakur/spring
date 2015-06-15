@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="infraAppp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>Inventory App</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Charts.js CSS -->
+    <link href="bower_components/angular-chart.js/dist/angular-chart.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="app/common/style/sb-admin.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="app/common/style/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="app/common/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+       <ng-include src="'app/common/header/header.html'"></ng-include>
+
+        <div id="page-wrapper">
+
+           <ui-view></ui-view>
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="bower_components/Chart.js/Chart.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+
+
+    <!-- app.js -->
+    <script src="app/app.js"></script>
+
+    <!-- dashboard -->
+    <script src="app/modules/dashboard/home/dashboardHome.js"></script>
+    <script src="app/modules/dashboard/client/clientDashboard.js"></script>
+
+    <!-- directives -->
+    <script src="app/common/directives/singleStatsBox/singleStatsBox.js"></script>
+    <script src="app/common/directives/multiStatsBox/multiStatsBox.js"></script>
+
+</body>
+
+</html>

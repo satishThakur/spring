@@ -7,16 +7,19 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 
 public class RegionsUtils {
-	
+
 	public static List<Region> getAllRegions(){
 		List<Region> regions = new ArrayList<Region>();
-		regions.add(Region.getRegion(Regions.US_EAST_1));
-		regions.add(Region.getRegion(Regions.US_WEST_1));
-		regions.add(Region.getRegion(Regions.US_WEST_2));
+		for(Regions regionsEnum : Regions.values()){
+			if(!Regions.GovCloud.equals(regionsEnum) &&
+					!Regions.CN_NORTH_1.equals(regionsEnum)) {
+				regions.add(Region.getRegion(regionsEnum));
+			}
+		}
 		return regions;
-		
+
 	}
-	
+
 	public static Region getRegionFromName(String name){
 		for(Region region : RegionsUtils.getAllRegions()){
 			if(region.getName().equals(name)){

@@ -37,6 +37,11 @@ public class ContactsServiceImpl implements ContactsService{
 		}
 		return result;
 	}
+	
+	@Override
+	public List<Contact> queryAllContacts(List<String> names) {
+		return contactRepository.getFilteredContacts(names);
+	}
 
 	@Override
 	public Contact getContactById(long id) {

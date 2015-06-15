@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                <small>Inventory Per client</small>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-repeat="clientData in clientsData">
+            <multi-stat-box panel-style="clientData.style" title="clientData.title"
+                            items="clientData.resources" state="clientData.state"></multi-stat-box>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i> Resource Distribution Per region</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                    <span>RDS Distribution</span>
+                                </div>
+                                <canvas id="pie" class="chart chart-pie" data="rdsDistribution"
+                                        labels="clients"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                    <span>EC2 Distribution</span>
+                                </div>
+                                <canvas id="pie1" class="chart chart-pie" data="ec2Distribution"
+                                        labels="clients"></canvas>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                    <span>ELB Distribution</span>
+                                </div>
+                                <canvas id="pie2" class="chart chart-pie" data="elbDistribution"
+                                        labels="clients"></canvas>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row text-center">
+                                <div class="col-lg-12">
+                                    <span>S3 Distribution</span>
+                                </div>
+                                <canvas id="pie3" class="chart chart-pie" data="s3Distribution"
+                                        labels="clients"></canvas>
+                            </div>
+
+                        </div>
+
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -21,10 +21,12 @@ public class ContactsController {
 	private ContactsService contactsService;
 	
 	@RequestMapping(method=GET)
-	public String queryContacts(@RequestParam(value="q", defaultValue="") String queryString, Model model){
+	public String queryContacts(@RequestParam(value="q", defaultValue="") List<String> queryStrings, Model model){
+		System.out.println("Query String: " + queryStrings);
 		List<Contact> contacts = null;
-		if(queryString != null && !queryString.isEmpty()){
-			contacts = contactsService.queryContacts(queryString);
+		if(queryStrings != null && !queryStrings.isEmpty()){
+			System.out.println("Querying filtered names");
+			contacts = contactsService.queryAllContacts(queryStrings);
 		}else{
 			contacts = contactsService.getAllContacts();
 		}

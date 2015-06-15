@@ -10,8 +10,6 @@ import javax.persistence.Id;
 @Entity
 public class Contact {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	private String name;
@@ -44,7 +42,8 @@ public class Contact {
 		this.address = address;
 	}
 	
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
 		return id;
 	}

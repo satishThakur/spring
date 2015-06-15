@@ -17,7 +17,7 @@ import com.amazonaws.services.rds.model.DBInstance;
 import com.amazonaws.services.rds.model.DescribeDBInstancesResult;
 import com.amazonaws.services.rds.model.ListTagsForResourceRequest;
 import com.amazonaws.services.rds.model.ListTagsForResourceResult;
-import com.satish.app.model.RdsInstance;
+import com.satish.app.domain.RdsInstance;
 import com.satish.app.util.ArnUtils;
 import com.satish.app.util.ConverterUtils;
 import com.satish.app.util.RegionsUtils;

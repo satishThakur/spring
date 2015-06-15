@@ -15,7 +15,7 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan({"com.satish.app.services","com.satish.app.repositories"})
+@ComponentScan({"com.satish.app.services","com.satish.app.repositories", "com.satish.app.common.dao.impl"})
 @EnableTransactionManagement
 public class RootConfig {
 	
@@ -26,7 +26,8 @@ public class RootConfig {
 	  sfb.setPackagesToScan(new String[] { "com.satish.app.domain" });
 	  Properties props = new Properties();
 	  props.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
-	  props.setProperty("hibernate.hbm2ddl.auto", "create");
+	  props.setProperty("hibernate.hbm2ddl.auto", "update");
+	  props.setProperty("hibernate.show_sql", "true");
 	  sfb.setHibernateProperties(props);
 	  return sfb;
 	}

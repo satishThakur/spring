@@ -17,7 +17,7 @@ public class SimpleFilter<T> implements Filter<T>{
 	}
 	
 	public void addAllowedValues(T value){
-		allowedValues.remove(value);
+		allowedValues.add(value);
 	}
 	
 	public void addAllowedValue(T value){

@@ -102,6 +102,14 @@ public class RdsInstance {
 		this.env = env;
 	}
 	
+	public String getOwn() {
+		return own;
+	}
+
+	public void setOwn(String own) {
+		this.own = own;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj)
@@ -119,12 +127,6 @@ public class RdsInstance {
 		return Objects.hash(instanceId, region);
 	}
 
-	public String getOwn() {
-		return own;
-	}
-
-	public void setOwn(String own) {
-		this.own = own;
-	}
+	
 
 }

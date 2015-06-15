@@ -1,29 +1,28 @@
-package com.satish.app.model;
+package com.satish.app.domain;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class EC2Instance {
+public class ElbInstance {
 	
 	private long id;
-	
-	private String instanceId;
+
+	private String elbName;
 	
 	private String region;
 	
-	private String instanceType;
-	
 	private String client;
-	
-	private String system;
-	
-	private String env;
 
+	private String system;
+
+	private String env;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
@@ -33,13 +32,14 @@ public class EC2Instance {
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	public String getInstanceId() {
-		return instanceId;
+	
+	@Column(name = "elbName",unique=true)
+	public String getElbName() {
+		return elbName;
 	}
 
-	public void setInstanceId(String instanceId) {
-		this.instanceId = instanceId;
+	public void setElbName(String elbName) {
+		this.elbName = elbName;
 	}
 
 	public String getRegion() {
@@ -48,14 +48,6 @@ public class EC2Instance {
 
 	public void setRegion(String region) {
 		this.region = region;
-	}
-
-	public String getInstanceType() {
-		return instanceType;
-	}
-
-	public void setInstanceType(String instanceType) {
-		this.instanceType = instanceType;
 	}
 
 	public String getClient() {
@@ -82,21 +74,20 @@ public class EC2Instance {
 		this.env = env;
 	}
 	
-	
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj)
 			return true;
-		if(! (obj instanceof EC2Instance))
+		if(! (obj instanceof ElbInstance))
 			return false;
-		EC2Instance other = (EC2Instance)obj;
-		return instanceId.equals(other.instanceId);
+		ElbInstance that = (ElbInstance)obj;
+		
+		return Objects.equals(elbName, that.elbName);
 	}
 	
 	@Override
 	public int hashCode() {
-		
-		return Objects.hash(instanceId);
-	}
+		return Objects.hashCode(elbName);
+	}	
 
 }

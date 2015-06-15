@@ -10,6 +10,8 @@ public interface RdsService {
 	
 	public Collection<RdsInstance> getAllInstances();
 	
+	public Collection<RdsInstance> getAllInstances(String region);
+	
 	public Collection<RdsInstance> getFilteredInstances(Filter<InstanceInfo> info);
 
 }

@@ -1,5 +1,7 @@
 package com.satish.app.common.dao.impl;
 
+import java.util.Collection;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,6 +30,15 @@ public class RdsInstanceDaoImpl extends GenericHibernateDao<RdsInstance, Long> i
 		criteria.add(Restrictions.eq("region", region));
 		criteria.add(Restrictions.eq("instanceId", instanceId));
 		return (RdsInstance) criteria.uniqueResult();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public Collection<RdsInstance> findAllInstancesInRegion(String region) {
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(RdsInstance.class);
+		criteria.add(Restrictions.eq("region", region));
+		return criteria.list();
 	}
 
 }

@@ -14,10 +14,10 @@ import com.satish.app.common.converters.EnvConverter;
 import com.satish.app.common.converters.ISystemConverter;
 import com.satish.app.domain.Client;
 import com.satish.app.domain.EC2Instance;
+import com.satish.app.domain.ElbInstance;
 import com.satish.app.domain.Environment;
 import com.satish.app.domain.ISystem;
 import com.satish.app.domain.RdsInstance;
-import com.satish.app.model.ElbInstance;
 
 public class ConverterUtils {
 	

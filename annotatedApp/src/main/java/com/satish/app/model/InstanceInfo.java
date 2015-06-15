@@ -2,6 +2,7 @@ package com.satish.app.model;
 
 import com.satish.app.domain.Client;
 import com.satish.app.domain.EC2Instance;
+import com.satish.app.domain.ElbInstance;
 import com.satish.app.domain.Environment;
 import com.satish.app.domain.ISystem;
 import com.satish.app.domain.RdsInstance;

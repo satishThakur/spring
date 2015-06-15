@@ -1,9 +1,11 @@
 package com.satish.app.controllers.aws;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,8 @@ import com.amazonaws.services.rds.model.DescribeDBInstancesResult;
 import com.amazonaws.services.rds.model.ListTagsForResourceRequest;
 import com.amazonaws.services.rds.model.ListTagsForResourceResult;
 import com.satish.app.domain.RdsInstance;
+import com.satish.app.services.FilterService;
+import com.satish.app.services.RdsService;
 import com.satish.app.util.ArnUtils;
 import com.satish.app.util.ConverterUtils;
 import com.satish.app.util.RegionsUtils;
@@ -26,14 +30,17 @@ import com.satish.app.util.TagsUtil;
 @RestController
 @RequestMapping("/rds/instances")
 public class RdsInstanceController {
+	
+	@Autowired
+	private RdsService rdsService;
+	
+	@Autowired
+	private FilterService filterService;
+	
 
 	@RequestMapping(method=RequestMethod.GET,produces="application/json")
-	public List<RdsInstance> getAllRdsInstances(){
-		List<RdsInstance> instances = new ArrayList<RdsInstance>();
-		for(Region region : RegionsUtils.getAllRegions()){
-			instances.addAll(getAllRdsInstancesInRegion(region));
-		}
-		return instances;
+	public Collection<RdsInstance> getAllRdsInstances(){
+		return rdsService.getAllInstances();
 	}
 
 	@RequestMapping(value="{region}",method=RequestMethod.GET,produces="application/json")

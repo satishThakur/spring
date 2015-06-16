@@ -2,7 +2,9 @@ package com.satish.app.services.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.satish.app.common.dao.EC2InstanceDao;
 import com.satish.app.common.filter.Filter;
 import com.satish.app.domain.EC2Instance;
 import com.satish.app.model.InstanceInfo;
+import com.satish.app.model.RegionStats;
 import com.satish.app.services.Ec2Service;
 import com.satish.app.util.RegionsUtils;
 
@@ -51,6 +54,23 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 		}
 		
 		return filteredInstances;
+	}
+
+	@Override
+	public RegionStats getEc2CurrentStats() {
+		Collection<EC2Instance> allInstances = getAllInstances();
+		
+		Map<String, Integer> regionCount = new HashMap<String, Integer>();
+		
+		for(EC2Instance instance : allInstances){
+			String region = instance.getRegion();
+			if(regionCount.containsKey(region)){
+				regionCount.put(region, regionCount.get(region) + 1);
+			}else{
+				regionCount.put(region, 1);
+			}
+		}
+		return new RegionStats(regionCount);
 	}
 
 }

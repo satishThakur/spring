@@ -10,7 +10,8 @@
         'ui.bootstrap',
         'chart.js',
         'infraApp.dashboard',
-        'infraApp.directives'
+        'infraApp.directives',
+        'infraApp.resources'
     ]);
 
 

@@ -9,16 +9,16 @@
     </div>
 
     <div class="row">
-        <single-stat-box panel-style="['panel','panel-primary']" stats="allStats.rds.count" name="RDS Instances"
+        <single-stat-box panel-style="['panel','panel-primary']" stats="allStats.rdsStats.regionStats.totalCount" name="RDS Instances"
                          state="home" style="['fa','fa-database','fa-5x']"></single-stat-box>
 
-        <single-stat-box panel-style="['panel','panel-green']" stats="allStats.ec2.count" name="EC2 Instances"
+        <single-stat-box panel-style="['panel','panel-green']" stats="allStats.ec2Stats.regionStats.totalCount" name="EC2 Instances"
                          state="home" style="['fa','fa-tasks','fa-5x']"></single-stat-box>
 
-        <single-stat-box panel-style="['panel','panel-yellow']" stats="allStats.elb.count" name="ELB Instances"
+        <single-stat-box panel-style="['panel','panel-yellow']" stats="allStats.elbStats.regionStats.totalCount" name="ELB Instances"
                          state="home" style="['fa','fa-arrows','fa-5x']"></single-stat-box>
 
-        <single-stat-box panel-style="['panel','panel-red']" stats="allStats.s3.count" name="S3 Instances"
+        <single-stat-box panel-style="['panel','panel-red']" stats="allStats.s3Stats.regionStats.totalCount" name="S3 Instances"
                          state="home" style="['fa','fa-bitbucket','fa-5x']"></single-stat-box>
     </div>
 

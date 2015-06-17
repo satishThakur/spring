@@ -9,8 +9,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.amazonaws.regions.Region;
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancing;
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient;
@@ -30,7 +28,6 @@ import com.satish.app.util.RegionsUtils;
 import com.satish.app.util.TagsUtil;
 
 @Service(value="ElbInventorySyncService")
-@Transactional
 public class ElbInventoryServiceImpl implements ElbInventorySyncService{
 
 	private static Logger logger = Logger.getLogger(ElbInventoryServiceImpl.class);

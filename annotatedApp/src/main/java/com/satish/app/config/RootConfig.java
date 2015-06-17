@@ -15,8 +15,8 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan({"com.satish.app.services","com.satish.app.repositories", "com.satish.app.common.dao.impl"})
 @EnableTransactionManagement
+@ComponentScan({"com.satish.app.services","com.satish.app.repositories", "com.satish.app.common.dao.impl"})
 public class RootConfig {
 	
 	@Bean

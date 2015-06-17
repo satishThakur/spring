@@ -1,7 +1,9 @@
 package com.satish.app.services;
 
+import java.util.Date;
+
 public interface InventorySyncService {
 	
-	public void  syncInventory();
+	void syncInventory(Date syncDate);
 
 }

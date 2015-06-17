@@ -5,8 +5,6 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.amazonaws.regions.Region;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
@@ -21,24 +19,22 @@ import com.satish.app.domain.Ec2InstanceHistory;
 import com.satish.app.services.EC2InstanceInventoryService;
 import com.satish.app.util.ConverterUtils;
 import com.satish.app.util.RegionsUtils;
-import com.satish.app.util.TimeUtils;
 
 @Service(value="EC2InstanceInventoryService")
-@Transactional
 public class EC2InstanceInventoryServiceImpl implements EC2InstanceInventoryService{
-	
+
 	private static final Logger logger = Logger.getLogger(EC2InstanceInventoryServiceImpl.class);
 
 	@Autowired
 	private EC2InstanceDao ec2InstanceDao;
-	
+
 	@Autowired
 	private Ec2InstanceHistoryDao ec2HistoryDao;
 
 
 	@Override
 	public void sync(Date syncDate){
-		
+
 		logger.info("=============Instance Sync started " + syncDate + "===================");
 		for(Region region : RegionsUtils.getAllRegions()){
 			logger.info("Syncing instances for region: " + region.getName());
@@ -64,7 +60,8 @@ public class EC2InstanceInventoryServiceImpl implements EC2InstanceInventoryServ
 			}
 		}		
 	}
-	
+
+
 	private void syncInstance(EC2Instance instance, Date date){
 		EC2Instance persisted = ec2InstanceDao.getInstanceByInstanceId(instance.getInstanceId());
 		if(persisted == null){
@@ -73,7 +70,7 @@ public class EC2InstanceInventoryServiceImpl implements EC2InstanceInventoryServ
 			logger.info("Already in db ignoring...");
 			//in future might need to merge few states ??
 		}
-		
+
 		Ec2InstanceHistory historyInstance = ec2HistoryDao.getInstanceHistoryByDateAndId(date, instance.getInstanceId());
 		if(historyInstance == null){
 			historyInstance = new Ec2InstanceHistory(instance);

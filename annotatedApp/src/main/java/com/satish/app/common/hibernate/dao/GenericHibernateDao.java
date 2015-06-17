@@ -9,7 +9,9 @@ import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public abstract class GenericHibernateDao<T, ID extends Serializable> 
 implements HibernateDao<T, ID> {
 	

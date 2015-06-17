@@ -6,8 +6,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.amazonaws.regions.Region;
 import com.amazonaws.services.rds.AmazonRDS;
 import com.amazonaws.services.rds.model.DBInstance;
@@ -26,7 +24,6 @@ import com.satish.app.util.RegionsUtils;
 import com.satish.app.util.TagsUtil;
 
 @Service(value="RdsInventoryService")
-@Transactional
 public class RdsInventoryServiceImpl implements RdsInventoryService{
 	
 	private static Logger logger = Logger.getLogger(RdsInventoryServiceImpl.class);

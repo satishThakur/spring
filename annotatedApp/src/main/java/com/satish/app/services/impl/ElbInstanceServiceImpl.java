@@ -7,8 +7,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.satish.app.common.dao.ElbInstanceDao;
 import com.satish.app.common.filter.Filter;
 import com.satish.app.domain.ElbInstance;
@@ -17,7 +15,6 @@ import com.satish.app.model.RegionStats;
 import com.satish.app.services.ElbService;
 
 @Service(value="ElbService")
-@Transactional
 public class ElbInstanceServiceImpl implements ElbService{
 	
 	@Autowired

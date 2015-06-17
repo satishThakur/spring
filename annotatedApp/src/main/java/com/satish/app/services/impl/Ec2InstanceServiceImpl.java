@@ -8,8 +8,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.amazonaws.regions.Region;
 import com.satish.app.common.dao.EC2InstanceDao;
 import com.satish.app.common.filter.Filter;
@@ -20,7 +18,6 @@ import com.satish.app.services.Ec2Service;
 import com.satish.app.util.RegionsUtils;
 
 @Service(value="Ec2Service")
-@Transactional
 public class Ec2InstanceServiceImpl implements Ec2Service{
 	
 	@Autowired

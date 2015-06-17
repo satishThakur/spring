@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.satish.app.common.dao.SyncStatusDao;
+import com.satish.app.domain.SyncStatus;
 import com.satish.app.services.EC2InstanceInventoryService;
 import com.satish.app.services.ElbInventorySyncService;
 import com.satish.app.services.InventorySyncService;
@@ -37,6 +39,9 @@ public class InventorySyncServiceImpl implements InventorySyncService{
 	@Autowired
 	private ElbInventorySyncService elbInventorySyncService;
 	
+	@Autowired
+	private SyncStatusDao statusDao;
+	
 	
 	
 	public InventorySyncServiceImpl(){
@@ -62,12 +67,24 @@ public class InventorySyncServiceImpl implements InventorySyncService{
 	}
 
 	protected void logSyncFailed(Date syncDate, long timeTaken) {
+		logger.info("Failed Status Sync took " + timeTaken + " ms");
+		SyncStatus status = new SyncStatus();
+		status.setDay(syncDate);
+		status.setEndTime(new Date());
+		status.setSuccess(false);
+		status.setMessage("Check server logs for errors");
 		
-		
+		statusDao.makePersistent(status);
 	}
 
 	protected void logSyncSuccess(Date syncDate, long timeTaken) {
+		logger.info("Success Status Sync took " + timeTaken + " ms");
+		SyncStatus status = new SyncStatus();
+		status.setDay(syncDate);
+		status.setEndTime(new Date());
+		status.setSuccess(true);
 		
+		statusDao.makePersistent(status);
 		
 	}
 

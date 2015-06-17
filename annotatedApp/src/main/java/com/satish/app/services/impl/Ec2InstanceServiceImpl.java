@@ -2,19 +2,24 @@ package com.satish.app.services.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.amazonaws.regions.Region;
 import com.satish.app.common.dao.EC2InstanceDao;
+import com.satish.app.common.dao.Ec2InstanceHistoryDao;
 import com.satish.app.common.filter.Filter;
 import com.satish.app.domain.EC2Instance;
+import com.satish.app.domain.Ec2InstanceHistory;
 import com.satish.app.model.InstanceInfo;
 import com.satish.app.model.RegionStats;
 import com.satish.app.services.Ec2Service;
+import com.satish.app.services.SyncStatusService;
 import com.satish.app.util.RegionsUtils;
 
 @Service(value="Ec2Service")
@@ -22,6 +27,12 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 	
 	@Autowired
 	private EC2InstanceDao ec2InstanceDao;
+	
+	@Autowired
+	private Ec2InstanceHistoryDao ec2InstanceHistory;
+	
+	@Autowired
+	private SyncStatusService syncStatsService;
 	
 	@Override
 	public Collection<EC2Instance> getAllInstances() {
@@ -55,7 +66,10 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 
 	@Override
 	public RegionStats getEc2CurrentStats() {
-		Collection<EC2Instance> allInstances = getAllInstances();
+		Date successData  = syncStatsService.getLastSuccessDate();
+		List<String> instanceIds = getAllInstanceIdsOnDate(successData);
+		
+		List<EC2Instance> allInstances = ec2InstanceDao.getInstancesByIds(instanceIds);
 		
 		Map<String, Integer> regionCount = new HashMap<String, Integer>();
 		
@@ -68,6 +82,15 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 			}
 		}
 		return new RegionStats(regionCount);
+	}
+	
+	private List<String> getAllInstanceIdsOnDate(Date date){
+		List<Ec2InstanceHistory> allInstances = ec2InstanceHistory.getAllInstancesOnDate(date);
+		List<String> instances = new ArrayList<String>();
+		for(Ec2InstanceHistory instanceHistory : allInstances){
+			instances.add(instanceHistory.getInstanceId());
+		}
+		return instances;
 	}
 
 }

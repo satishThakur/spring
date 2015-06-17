@@ -11,4 +11,6 @@ public interface EC2InstanceDao extends HibernateDao<EC2Instance, Long>{
 
 	public List<EC2Instance> getInstancesInRegion(String regionName);
 
+	List<EC2Instance> getInstancesByIds(List<String> instanceIds);
+
 }

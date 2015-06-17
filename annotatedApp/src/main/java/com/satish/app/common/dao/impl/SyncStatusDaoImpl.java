@@ -26,7 +26,7 @@ public class SyncStatusDaoImpl extends GenericHibernateDao<SyncStatus, Long> imp
 	public SyncStatus getLatestSuccessStatus() {
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(SyncStatus.class);
-		criteria.add(Restrictions.eq("isSuccess", true));
+		criteria.add(Restrictions.eq("success", true));
 		criteria.addOrder(Order.desc("endTime"));
 		criteria.setMaxResults(1);
 		return (SyncStatus) criteria.uniqueResult();

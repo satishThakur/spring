@@ -1,6 +1,7 @@
 package com.satish.app.common.dao.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -31,6 +32,16 @@ public class Ec2InstanceHistoryDaoImpl extends GenericHibernateDao<Ec2InstanceHi
 		criteria.add(Restrictions.eq("date", date));
 		criteria.add(Restrictions.eq("instanceId", instanceId));
 		return (Ec2InstanceHistory) criteria.uniqueResult();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Ec2InstanceHistory> getAllInstancesOnDate(Date date){
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(Ec2InstanceHistory.class);
+		criteria.add(Restrictions.eq("date", date));
+		
+		return (List<Ec2InstanceHistory>) criteria.list();
 	}
 
 }

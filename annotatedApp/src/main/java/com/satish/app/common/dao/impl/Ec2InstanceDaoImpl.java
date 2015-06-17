@@ -41,6 +41,15 @@ public class Ec2InstanceDaoImpl extends GenericHibernateDao<EC2Instance, Long> i
 		return criteria.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EC2Instance> getInstancesByIds(List<String> instanceIds){
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(EC2Instance.class);
+		criteria.add(Restrictions.in("instanceId", instanceIds));
+		return criteria.list();
+	}
+	
 	
 
 }

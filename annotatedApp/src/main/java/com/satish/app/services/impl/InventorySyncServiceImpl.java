@@ -17,6 +17,7 @@ import com.satish.app.services.EC2InstanceInventoryService;
 import com.satish.app.services.ElbInventorySyncService;
 import com.satish.app.services.InventorySyncService;
 import com.satish.app.services.RdsInventoryService;
+import com.satish.app.services.S3InventorySyncService;
 import com.satish.app.util.TimeUtils;
 
 @Service(value="InventorySyncService")
@@ -38,6 +39,8 @@ public class InventorySyncServiceImpl implements InventorySyncService{
 	
 	@Autowired
 	private ElbInventorySyncService elbInventorySyncService;
+	
+	private S3InventorySyncService s3InventorySyncService;
 	
 	@Autowired
 	private SyncStatusDao statusDao;
@@ -94,6 +97,7 @@ public class InventorySyncServiceImpl implements InventorySyncService{
 		ec2Inventory.sync(syncDate);
 		rdsInventoryService.sync(syncDate);
 		elbInventorySyncService.sync(syncDate);
+		s3InventorySyncService.sync(syncDate);
 	}
 	
 	@PreDestroy

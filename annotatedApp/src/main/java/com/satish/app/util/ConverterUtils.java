@@ -8,6 +8,11 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.elasticloadbalancing.model.LoadBalancerDescription;
 import com.amazonaws.services.rds.model.DBInstance;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.BucketTaggingConfiguration;
+import com.amazonaws.services.s3.model.TagSet;
 import com.satish.app.common.converters.ClientConverter;
 import com.satish.app.common.converters.Converter;
 import com.satish.app.common.converters.EnvConverter;
@@ -18,6 +23,7 @@ import com.satish.app.domain.ElbInstance;
 import com.satish.app.domain.Environment;
 import com.satish.app.domain.ISystem;
 import com.satish.app.domain.RdsInstance;
+import com.satish.app.domain.S3Bucket;
 
 public class ConverterUtils {
 	
@@ -63,6 +69,34 @@ public class ConverterUtils {
 		
 		return instance;
 	}
+	
+	public static S3Bucket convertS3Bucket(Bucket bucket,long bucketSize){
+
+		S3Bucket s3bucket = new S3Bucket();
+
+		s3bucket.setBucketName(bucket.getName());
+
+		s3bucket.setBucketSize(bucketSize);
+
+
+		AmazonS3 s3 = new AmazonS3Client(); 
+
+		    BucketTaggingConfiguration bucketTaggingConfiguration= s3.getBucketTaggingConfiguration(bucket.getName());
+
+		    TagSet tagset= bucketTaggingConfiguration.getTagSet();
+
+		    Map<String,String> tags=tagset.getAllTags();
+
+		s3bucket.setClient(tags.get("client") != null ? tags.get("client") : DEFAULT_TAG);
+
+		s3bucket.setEnv(tags.get("env") != null ? tags.get("env") : DEFAULT_TAG);
+
+		s3bucket.setSystem(tags.get("system") != null ? tags.get("system") : DEFAULT_TAG);
+
+
+		return s3bucket;
+
+		}
 	
 	public static List<Client> convertToClients(List<String> clientNames){
 		if(clientNames == null || clientNames.isEmpty()){

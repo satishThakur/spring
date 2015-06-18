@@ -6,6 +6,7 @@ import com.satish.app.domain.ElbInstance;
 import com.satish.app.domain.Environment;
 import com.satish.app.domain.ISystem;
 import com.satish.app.domain.RdsInstance;
+import com.satish.app.domain.S3Bucket;
 
 public class InstanceInfo {
 	
@@ -69,5 +70,13 @@ public class InstanceInfo {
 		info.setSystem(new ISystem(elbInstance.getSystem()));
 		return info;
 	}
+	public static InstanceInfo getInstanceInfo(S3Bucket s3Bucket){
+		InstanceInfo info = new InstanceInfo();
+		info.setClient(new Client(s3Bucket.getClient()));
+		info.setEnv(new Environment(s3Bucket.getEnv()));
+		info.setSystem(new ISystem(s3Bucket.getSystem()));
+		return info;
+	}
+
 
 }

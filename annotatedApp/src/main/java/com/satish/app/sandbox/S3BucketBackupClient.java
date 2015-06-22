@@ -20,29 +20,31 @@ public class S3BucketBackupClient {
 		String destinationKeyPrefix = "sears_backup/";
 		
 		Calendar calender = Calendar.getInstance();
-		calender.set(2015, 5, 18, 12, 0, 0);
+		calender.set(2015, 4, 1, 0, 0, 0);
 		
 		
 		Date cutoffDate = calender.getTime();
 		
+		
 		System.out.println(cutoffDate);
 		
-		//BucketObjectPredicate predicate = new BucketObjectPredicate(
-		//		Arrays.asList("input", "output"), cutoffDate);
+		BucketObjectPredicate predicate = new BucketObjectPredicate(
+				Arrays.asList("input", "test/output"), cutoffDate);
 		
 		//BucketObjectPrinter printer = new BucketObjectPrinter();
 		
-		AllFilesPredicate allFilesPredicate = new AllFilesPredicate();
+		//AllFilesPredicate allFilesPredicate = new AllFilesPredicate();
 		
 		
 		S3BucketServiceImpl service = new S3BucketServiceImpl(sourceBucket, region);
 		
-		S3CopyConsumer copyConsumer = new S3CopyConsumer(service, destinationBucket, destinationKeyPrefix);
+		//S3CopyConsumer copyConsumer = new S3CopyConsumer(service, destinationBucket, destinationKeyPrefix);
 		
 		
-		//S3ObjectBackupConsumer copier = new S3ObjectBackupConsumer(service, destinationBucket, destinationKeyPrefix);
+		S3ObjectBackupConsumer backupAndDelete = new S3ObjectBackupConsumer(service, destinationBucket, destinationKeyPrefix);
 		
-		service.filter(allFilesPredicate, copyConsumer);
+		service.filter(predicate, backupAndDelete);
+		
 		
 	}
 

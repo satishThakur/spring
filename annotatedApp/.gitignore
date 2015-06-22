@@ -2,6 +2,7 @@
 .classpath
 .settings
 .project
+.idea
 bin
 target
 bower_components

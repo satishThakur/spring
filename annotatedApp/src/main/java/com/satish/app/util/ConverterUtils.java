@@ -1,6 +1,7 @@
 package com.satish.app.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ import com.satish.app.domain.RdsInstance;
 import com.satish.app.domain.S3Bucket;
 
 public class ConverterUtils {
-	
+
 	private static final String DEFAULT_TAG = "UNKNOWN";
 
 	public static EC2Instance convertInstance(Instance instance, Region region) {
@@ -34,16 +35,16 @@ public class ConverterUtils {
 		ec2Instance.setInstanceId(instance.getInstanceId());
 		ec2Instance.setInstanceType(instance.getInstanceType());
 		ec2Instance.setRegion(region.getName());
-		
+
 		Map<String,String> tags = TagsUtil.flattenTags(instance.getTags());
-		
+
 		ec2Instance.setClient(tags.get("client") != null ? tags.get("client") : DEFAULT_TAG);
 		ec2Instance.setEnv(tags.get("env") != null ? tags.get("env") : DEFAULT_TAG);
 		ec2Instance.setSystem(tags.get("system") != null ? tags.get("system") : DEFAULT_TAG);
-		
+
 		return ec2Instance;
 	}
-	
+
 	public static RdsInstance convertInstance(DBInstance dbInstance,Region region, Map<String,String> tags){
 		RdsInstance instance = new RdsInstance();
 		instance.setDBInstanceClass(dbInstance.getDBInstanceClass());
@@ -54,22 +55,22 @@ public class ConverterUtils {
 		instance.setEnv(tags.get("env") != null ? tags.get("env") : DEFAULT_TAG);
 		instance.setSystem(tags.get("system") != null ? tags.get("system") : DEFAULT_TAG);
 		instance.setOwn(tags.get("own") != null ? tags.get("own") : DEFAULT_TAG);
-		
+
 		return instance;
 	}
-	
+
 	public static ElbInstance convertElbInstance(LoadBalancerDescription elb, Region region, Map<String,String> tags){
 		ElbInstance instance = new ElbInstance();
 		instance.setElbName(elb.getLoadBalancerName());
 		instance.setRegion(region.getName());
-		
+
 		instance.setClient(tags.get("client") != null ? tags.get("client") : DEFAULT_TAG);
 		instance.setEnv(tags.get("env") != null ? tags.get("env") : DEFAULT_TAG);
 		instance.setSystem(tags.get("system") != null ? tags.get("system") : DEFAULT_TAG);
-		
+
 		return instance;
 	}
-	
+
 	public static S3Bucket convertS3Bucket(Bucket bucket,long bucketSize){
 
 		S3Bucket s3bucket = new S3Bucket();
@@ -81,11 +82,14 @@ public class ConverterUtils {
 
 		AmazonS3 s3 = new AmazonS3Client(); 
 
-		    BucketTaggingConfiguration bucketTaggingConfiguration= s3.getBucketTaggingConfiguration(bucket.getName());
-
-		    TagSet tagset= bucketTaggingConfiguration.getTagSet();
-
-		    Map<String,String> tags=tagset.getAllTags();
+		Map<String,String> tags = new HashMap<String, String>();
+		BucketTaggingConfiguration bucketTaggingConfiguration= s3.getBucketTaggingConfiguration(bucket.getName());
+		
+		if(bucketTaggingConfiguration != null){
+			TagSet tagset= bucketTaggingConfiguration.getTagSet();
+			if(tagset != null)
+				tags=tagset.getAllTags();
+		}
 
 		s3bucket.setClient(tags.get("client") != null ? tags.get("client") : DEFAULT_TAG);
 
@@ -96,33 +100,33 @@ public class ConverterUtils {
 
 		return s3bucket;
 
-		}
-	
+	}
+
 	public static List<Client> convertToClients(List<String> clientNames){
 		if(clientNames == null || clientNames.isEmpty()){
 			return null;
 		}
 		return convert(clientNames, new ClientConverter());
 	}
-	
+
 	public static List<ISystem> convertToSystems(List<String> systemNames){
 		if(systemNames == null || systemNames.isEmpty()){
 			return null;
 		}
 		return convert(systemNames, new ISystemConverter());
 	}
-	
+
 	public static List<Environment> convertToEnvs(List<String> envNames){
 		if(envNames == null || envNames.isEmpty()){
 			return null;
 		}
 		return convert(envNames, new EnvConverter());
 	}	
-	
+
 	private  static <T,U> List<U>  convert(List<T> input, Converter<T,U> converter){
-		
+
 		List<U> output = new ArrayList<U>();
-		
+
 		for(T value : input){
 			output.add(converter.convert(value));
 		}

@@ -20,7 +20,9 @@ public class S3DeleteBucketUtil {
 			objectListing = s3Client.listNextBatchOfObjects(objectListing);
 
 			processObjectListing(s3Client, objectListing,bucketName);
-		}	
+		}
+		
+		s3Client.deleteBucket(bucketName);
 	}
 
 	private static void processObjectListing(AmazonS3 s3Client,

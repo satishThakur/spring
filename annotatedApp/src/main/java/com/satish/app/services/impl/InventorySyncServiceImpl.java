@@ -40,6 +40,7 @@ public class InventorySyncServiceImpl implements InventorySyncService{
 	@Autowired
 	private ElbInventorySyncService elbInventorySyncService;
 	
+	@Autowired
 	private S3InventorySyncService s3InventorySyncService;
 	
 	@Autowired
@@ -61,7 +62,7 @@ public class InventorySyncServiceImpl implements InventorySyncService{
 					long timeTaken = System.currentTimeMillis() - startTime;
 					logSyncSuccess(syncDate,timeTaken);
 				}catch(Exception ex){
-					logger.error("Sync failed this time with " + ex.getMessage());
+					logger.error("Sync failed this time with ", ex);
 					logSyncFailed(syncDate, System.currentTimeMillis() - startTime);
 				}
 				

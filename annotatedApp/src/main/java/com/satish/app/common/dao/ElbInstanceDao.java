@@ -11,4 +11,6 @@ public interface ElbInstanceDao extends HibernateDao<ElbInstance, Long>{
 
 	List<ElbInstance> getInstancesInRegion(String regionName);
 
+	List<ElbInstance> getInstancesByNames(List<String> instanceIds);
+
 }

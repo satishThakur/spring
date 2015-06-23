@@ -37,5 +37,21 @@ public class ResourcesDataController {
 		
 		return data;
 	}
+	
+	@RequestMapping(value="clients",method=RequestMethod.GET, produces="application/json")
+	public ResourcesData getResourcesStatsForClients(){
+		
+		ResourcesData data = new ResourcesData();
+		data.setEc2Stats(ec2Service.getEc2CurrentStats());
+		data.setElbStats(elbService.getElbCurrentStats());
+		data.setRdsStats(rdsService.getRdsCurrentStats());
+		
+		data.setS3Stats(new RegionStats());
+		
+		
+		return data;
+	}
+	
+	
 
 }

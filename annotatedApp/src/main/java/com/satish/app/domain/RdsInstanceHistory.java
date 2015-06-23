@@ -63,6 +63,11 @@ public class RdsInstanceHistory {
 	}
 	
 	@Override
+	public String toString() {
+		return this.getClass().getName() + " : " + instanceId + " : " + region + ": On" + date;
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if(this == obj)
 			return true;
@@ -70,12 +75,13 @@ public class RdsInstanceHistory {
 			return false;
 		RdsInstanceHistory other = (RdsInstanceHistory)obj;
 		return Objects.equals(this.instanceId, other.instanceId) &&
-				Objects.equals(this.region, other.region);
+				Objects.equals(this.region, other.region) &&
+				Objects.equals(this.date, other.date);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(instanceId, region);
+		return Objects.hash(instanceId, region, date);
 	}
 	
 

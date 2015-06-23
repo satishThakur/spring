@@ -1,6 +1,7 @@
 package com.satish.app.services;
 
 import java.util.Collection;
+import java.util.Map;
 
 import com.satish.app.common.filter.Filter;
 import com.satish.app.domain.ElbInstance;
@@ -16,5 +17,7 @@ public interface ElbService {
 	public Collection<ElbInstance> getFilteredInstances(Filter<InstanceInfo> info);
 
 	RegionStats getElbCurrentStats();
+
+	Map<String, Integer> getClientsStats();
 
 }

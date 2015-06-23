@@ -2,6 +2,7 @@ package com.satish.app.services;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import com.satish.app.common.filter.Filter;
 import com.satish.app.domain.EC2Instance;
@@ -14,8 +15,10 @@ public interface Ec2Service {
 	
 	public Collection<EC2Instance> getFilteredInstances(Filter<InstanceInfo> info);
 
-	List<EC2Instance> getInstancesInRegion(String regionName);
+	public List<EC2Instance> getInstancesInRegion(String regionName);
 
 	public RegionStats getEc2CurrentStats();
+
+	public Map<String, Integer> getAllClientsStats();
 
 }

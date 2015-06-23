@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,21 +23,21 @@ import com.satish.app.util.RegionsUtils;
 
 @Service(value="Ec2Service")
 public class Ec2InstanceServiceImpl implements Ec2Service{
-	
+
 	@Autowired
 	private EC2InstanceDao ec2InstanceDao;
-	
+
 	@Autowired
 	private Ec2InstanceHistoryDao ec2InstanceHistory;
-	
+
 	@Autowired
 	private SyncStatusService syncStatsService;
-	
+
 	@Override
 	public Collection<EC2Instance> getAllInstances() {
 		return ec2InstanceDao.findAll();
 	}
-	
+
 	@Override
 	public List<EC2Instance> getInstancesInRegion(String regionName){
 		Region region = RegionsUtils.getRegionFromName(regionName);
@@ -47,32 +46,29 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 		}
 		return ec2InstanceDao.getInstancesInRegion(regionName);
 	}
-	
+
 
 	@Override
 	public Collection<EC2Instance> getFilteredInstances(Filter<InstanceInfo> infoFilter) {
 		Collection<EC2Instance> allInstances = getAllInstances();
 		Collection<EC2Instance> filteredInstances = new ArrayList<>();
-		
+
 		for(EC2Instance instance : allInstances){
 			InstanceInfo info = InstanceInfo.getInstanceInfo(instance);
 			if(infoFilter.isAllowed(info)){
 				filteredInstances.add(instance);
 			}
 		}
-		
+
 		return filteredInstances;
 	}
 
 	@Override
 	public RegionStats getEc2CurrentStats() {
-		Date successData  = syncStatsService.getLastSuccessDate();
-		List<String> instanceIds = getAllInstanceIdsOnDate(successData);
-		
-		List<EC2Instance> allInstances = ec2InstanceDao.getInstancesByIds(instanceIds);
-		
+		List<EC2Instance> allInstances = getAllCurrentInstances();
+
 		Map<String, Integer> regionCount = new HashMap<String, Integer>();
-		
+
 		for(EC2Instance instance : allInstances){
 			String region = instance.getRegion();
 			if(regionCount.containsKey(region)){
@@ -83,7 +79,13 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 		}
 		return new RegionStats(regionCount);
 	}
-	
+
+	private List<EC2Instance> getAllCurrentInstances(){
+		Date successData  = syncStatsService.getLastSuccessDate();
+		List<String> instanceIds = getAllInstanceIdsOnDate(successData);
+		return ec2InstanceDao.getInstancesByIds(instanceIds);
+	}
+
 	private List<String> getAllInstanceIdsOnDate(Date date){
 		List<Ec2InstanceHistory> allInstances = ec2InstanceHistory.getAllInstancesOnDate(date);
 		List<String> instances = new ArrayList<String>();
@@ -91,6 +93,22 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 			instances.add(instanceHistory.getInstanceId());
 		}
 		return instances;
+	}
+
+	@Override
+	public Map<String,Integer> getAllClientsStats(){
+		List<EC2Instance> allInstances = getAllCurrentInstances();
+		Map<String, Integer> clientsCount = new HashMap<String, Integer>();
+
+		for(EC2Instance instance : allInstances){
+			String client = instance.getClient();
+			if(clientsCount.containsKey(client)){
+				clientsCount.put(client, clientsCount.get(client) + 1);
+			}else{
+				clientsCount.put(client, 1);
+			}
+		}
+		return clientsCount;
 	}
 
 }

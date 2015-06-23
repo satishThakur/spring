@@ -39,5 +39,14 @@ public class ElbInstanceDaoImpl extends GenericHibernateDao<ElbInstance, Long> i
 		criteria.add(Restrictions.eq("region", regionName));
 		return criteria.list();
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ElbInstance> getInstancesByNames(List<String> elbNames) {
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(ElbInstance.class);
+		criteria.add(Restrictions.in("elbName", elbNames));
+		return criteria.list();
+	}
 
 }

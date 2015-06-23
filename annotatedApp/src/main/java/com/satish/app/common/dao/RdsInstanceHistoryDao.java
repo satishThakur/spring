@@ -1,5 +1,6 @@
 package com.satish.app.common.dao;
 
+import java.util.Collection;
 import java.util.Date;
 
 import com.satish.app.common.hibernate.dao.HibernateDao;
@@ -9,5 +10,7 @@ public interface RdsInstanceHistoryDao extends HibernateDao<RdsInstanceHistory, 
 
 	public RdsInstanceHistory getInstanceByDateAndId(Date syncDate, String instanceId,
 			String region);
+	
+	public Collection<RdsInstanceHistory> getAllInstancesOnDate(Date day);
 
 }

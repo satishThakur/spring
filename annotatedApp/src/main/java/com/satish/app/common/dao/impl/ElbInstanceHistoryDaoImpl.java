@@ -1,6 +1,7 @@
 package com.satish.app.common.dao.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -31,6 +32,15 @@ public class ElbInstanceHistoryDaoImpl extends GenericHibernateDao<ElbInstanceHi
 		criteria.add(Restrictions.eq("date", date));
 		
 		return (ElbInstanceHistory) criteria.uniqueResult();
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ElbInstanceHistory> getAllInstancesOnDate(Date date) {
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(ElbInstanceHistory.class);
+		criteria.add(Restrictions.eq("date", date));	
+		return criteria.list();
 	}
 
 }

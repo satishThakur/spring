@@ -1,5 +1,6 @@
 package com.satish.app.common.dao.impl;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.hibernate.Criteria;
@@ -33,6 +34,16 @@ public class RdsInstanceHistoryDaoImpl extends GenericHibernateDao<RdsInstanceHi
 		criteria.add(Restrictions.eq("region", region));
 		criteria.add(Restrictions.eq("instanceId", instanceId));
 		return (RdsInstanceHistory) criteria.uniqueResult();
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public Collection<RdsInstanceHistory> getAllInstancesOnDate(Date day) {
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(RdsInstanceHistory.class);
+		criteria.add(Restrictions.eq("date", day));
+		
+		return criteria.list();
 	}
 
 }

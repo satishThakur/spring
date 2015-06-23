@@ -13,7 +13,9 @@ import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.satish.app.common.dao.S3BucketDao;
+import com.satish.app.common.dao.S3BucketHistoryDao;
 import com.satish.app.domain.S3Bucket;
+import com.satish.app.domain.S3BucketHistory;
 import com.satish.app.services.S3InventorySyncService;
 import com.satish.app.util.ConverterUtils;
 
@@ -23,6 +25,9 @@ public class S3BucketInventoryServiceImpl implements S3InventorySyncService{
 	
 	@Autowired
 	private S3BucketDao s3BucketDao;
+	
+	@Autowired
+	private S3BucketHistoryDao s3HistoryDao;
 	
 	@Override
 	public void sync(Date syncDate){
@@ -34,19 +39,32 @@ public class S3BucketInventoryServiceImpl implements S3InventorySyncService{
 			logger.debug("persisting: " + bucket.getName());
 			bucketSize=0;
 			S3Bucket  s3BucketDomain = ConverterUtils.convertS3Bucket(bucket,bucketSize);
-			S3Bucket persisted = s3BucketDao.getBucketByBucketName(bucket.getName());
-			if(persisted == null){
-				logger.info("persisting bucket " + s3BucketDomain.getBucketName());
-				s3BucketDao.makePersistent(s3BucketDomain);
-			}else{
-				logger.info("Already in db ignoring...");
-				//in future might need to merge few states ??
-			}
+			syncBucketInstance(s3BucketDomain, syncDate);
 					
 		}
 		
 		logger.info("================= Syncing S3Buckets Done==================");
 		
+	}
+	
+	private void syncBucketInstance(S3Bucket s3BucketDomain,Date syncDate){
+		S3Bucket persisted = s3BucketDao.getBucketByBucketName(s3BucketDomain.getBucketName());
+		if(persisted == null){
+			logger.info("persisting bucket " + s3BucketDomain.getBucketName());
+			s3BucketDao.makePersistent(s3BucketDomain);
+		}else{
+			logger.info("Already in db ignoring...");
+			//in future might need to merge few states ??
+		}
+		
+		S3BucketHistory historyInstance = s3HistoryDao.getInstanceHistoryByDateAndName(syncDate, s3BucketDomain.getBucketName());
+		if(historyInstance == null){
+			historyInstance = new S3BucketHistory(s3BucketDomain);
+			historyInstance.setDate(syncDate);
+			s3HistoryDao.makePersistent(historyInstance);
+		}else{
+			logger.info("s3bucket instance already present " + s3BucketDomain.getBucketName());
+		}
 	}
 	
 	@SuppressWarnings("unused")

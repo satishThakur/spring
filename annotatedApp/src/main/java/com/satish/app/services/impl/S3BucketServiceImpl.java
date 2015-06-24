@@ -83,5 +83,22 @@ public class S3BucketServiceImpl implements S3Service {
 		}
 		return bucketNames;
 	}
+	
+	
+	@Override
+	public Map<String,Integer> getAllClientsStats(){
+		List<S3Bucket> allBuckets = getAllCurrentInstances();
+		Map<String, Integer> clientsCount = new HashMap<String, Integer>();
+
+		for(S3Bucket bucket : allBuckets){
+			String client = bucket.getClient();
+			if(clientsCount.containsKey(client)){
+				clientsCount.put(client, clientsCount.get(client) + 1);
+			}else{
+				clientsCount.put(client, 1);
+			}
+		}
+		return clientsCount;
+	}
 
 }

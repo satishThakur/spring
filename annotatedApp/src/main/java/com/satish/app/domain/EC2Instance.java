@@ -1,5 +1,6 @@
 package com.satish.app.domain;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -18,6 +19,10 @@ public class EC2Instance {
 	private String region;
 	
 	private String instanceType;
+	
+	private boolean isDead;
+	
+	private Date deadDate;
 	
 	private String client;
 	
@@ -58,6 +63,23 @@ public class EC2Instance {
 
 	public void setInstanceType(String instanceType) {
 		this.instanceType = instanceType;
+	}
+	
+	public boolean isDead() {
+		return isDead;
+	}
+	
+	@Column(name = "dead", columnDefinition = "boolean default false", nullable = false)
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
+	}
+
+	public Date getDeadDate() {
+		return deadDate;
+	}
+
+	public void setDeadDate(Date deadDate) {
+		this.deadDate = deadDate;
 	}
 
 	public String getClient() {
@@ -100,5 +122,7 @@ public class EC2Instance {
 		
 		return Objects.hash(instanceId);
 	}
+
+	
 
 }

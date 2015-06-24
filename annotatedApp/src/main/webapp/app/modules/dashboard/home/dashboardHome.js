@@ -58,9 +58,6 @@
             [20, 20, 25, 25, 30, 35, 40],
             [20, 40, 50, 70, 90, 93, 80]
         ];
-        $scope.onClick = function (points, evt) {
-            console.log(points, evt);
-        };
 
     };
 

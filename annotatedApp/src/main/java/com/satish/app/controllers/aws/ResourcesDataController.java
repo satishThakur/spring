@@ -94,6 +94,24 @@ public class ResourcesDataController {
 			}
 			clientStats.setElbInstancesCount(count);			
 		}
+		
+		
+		Map<String,Integer> s3ClientsMapping = s3Service.getAllClientsStats();
+
+		for(Entry<String,Integer> s3MappingEntry : s3ClientsMapping.entrySet()){
+			String client = s3MappingEntry.getKey();
+			Integer count = s3MappingEntry.getValue();
+
+			AllResourcesStats clientStats = statsMapping.get(client);
+			if(clientStats == null){
+				clientStats = new AllResourcesStats();
+				statsMapping.put(client, clientStats);
+			}
+			clientStats.setS3InstancesCount(count);			
+		}
+
+		
+		
 
 		clientsStats.setStatsMapping(statsMapping);
 

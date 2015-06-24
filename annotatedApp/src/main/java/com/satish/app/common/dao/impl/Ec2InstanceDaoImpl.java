@@ -1,6 +1,8 @@
 package com.satish.app.common.dao.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -48,6 +50,21 @@ public class Ec2InstanceDaoImpl extends GenericHibernateDao<EC2Instance, Long> i
 		Criteria criteria = session.createCriteria(EC2Instance.class);
 		criteria.add(Restrictions.in("instanceId", instanceIds));
 		return criteria.list();
+	}
+	
+	@Override
+	public Set<String> getAllAliveInstanceIds(){
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(EC2Instance.class);
+		criteria.add(Restrictions.eq("dead", false));
+		@SuppressWarnings("unchecked")
+		List<EC2Instance> instances = criteria.list();
+		
+		Set<String> ids = new HashSet<String>();
+		for(EC2Instance instance : instances){
+			ids.add(instance.getInstanceId());
+		}	
+		return ids;		
 	}
 	
 	

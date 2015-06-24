@@ -1,6 +1,7 @@
 package com.satish.app.common.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import com.satish.app.common.hibernate.dao.HibernateDao;
 import com.satish.app.domain.EC2Instance;
@@ -11,6 +12,8 @@ public interface EC2InstanceDao extends HibernateDao<EC2Instance, Long>{
 
 	public List<EC2Instance> getInstancesInRegion(String regionName);
 
-	List<EC2Instance> getInstancesByIds(List<String> instanceIds);
+	public List<EC2Instance> getInstancesByIds(List<String> instanceIds);
+
+	public Set<String> getAllAliveInstanceIds();
 
 }

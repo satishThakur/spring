@@ -32,7 +32,7 @@
         };
 
 
-        var getCompFrieldlyName = function(comp){
+        var getCompFriendlyName = function(comp){
             var friendlyName = compFriendlyNames[comp];
             if(friendlyName){
                 return friendlyName;
@@ -85,7 +85,7 @@
         clientStat.get(function(data){
             $scope.clientsRawData = data.statsMapping;
             console.log('clientsData', $scope.clientsRawData);
-
+            var clientsData = [];
             for(var client in $scope.clientsRawData){
                 if($scope.clientsRawData.hasOwnProperty(client)) {
                     var clientData = $scope.clientsRawData[client];
@@ -94,20 +94,26 @@
                     transformedData.title = 'Client ' + client;
                     transformedData.style = getClientStyle(client);
                     transformedData.state = 'home';
+                    transformedData.totalResources = 0;
                     transformedData.resources = [];
                     for(var resource in clientData){
                         if(clientData.hasOwnProperty(resource)){
                             var resourceData = {};
                             resourceData.style = getResourceStyle(resource);
                             resourceData.stat = clientData[resource];
-                            resourceData.name = getCompFrieldlyName(resource);
+                            transformedData.totalResources = transformedData.totalResources + resourceData.stat;
+                            resourceData.name = getCompFriendlyName(resource);
                             transformedData.resources.push(resourceData);
                         }
                     }
-                    $scope.clientsData.push(transformedData);
+                    clientsData.push(transformedData);
                 }
             };
 
+            clientsData.sort(function(clienta, clientb){
+                return clientb.totalResources - clienta.totalResources;
+            });
+            $scope.clientsData = clientsData;
             console.log('clientsData', $scope.clientsData);
 
             $scope.clients.forEach(function(client){

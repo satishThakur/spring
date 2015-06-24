@@ -50,7 +50,7 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 
 	@Override
 	public Collection<EC2Instance> getFilteredInstances(Filter<InstanceInfo> infoFilter) {
-		Collection<EC2Instance> allInstances = getAllInstances();
+		Collection<EC2Instance> allInstances = getAllCurrentInstances();
 		Collection<EC2Instance> filteredInstances = new ArrayList<>();
 
 		for(EC2Instance instance : allInstances){

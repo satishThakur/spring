@@ -91,7 +91,7 @@
                     var clientData = $scope.clientsRawData[client];
                     $scope.clients.push(client);
                     var transformedData = {};
-                    transformedData.title = 'Client ' + client;
+                    transformedData.title = client;
                     transformedData.style = getClientStyle(client);
                     transformedData.state = 'home';
                     transformedData.totalResources = 0;

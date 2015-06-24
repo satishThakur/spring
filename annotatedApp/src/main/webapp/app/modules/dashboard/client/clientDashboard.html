@@ -1,14 +1,15 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                <small>Inventory Per client</small>
-            </h1>
+        <div class="col-lg-offset-4 col-lg-5 searchBox">
+            <form class="navbar-form">
+                <input type="text" class="form-control input-lg" placeholder="Search Client..." ng-model="query.title">
+                <i class="fa fa-search fa-2x"></i>
+            </form>
         </div>
     </div>
     <div class="row">
-        <div ng-repeat="clientData in clientsData">
+        <div ng-repeat="clientData in clientsData | filter:query">
             <multi-stat-box panel-style="clientData.style" title="clientData.title"
                             items="clientData.resources" state="clientData.state"></multi-stat-box>
         </div>
@@ -18,7 +19,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i> Resource Distribution Per region</h3>
+                    <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i> Resource Distribution Per Client</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">

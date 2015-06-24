@@ -5,10 +5,11 @@
 (function(){
     'use strict';
 
-    var app = angular.module('infraAppp', [
+    var app = angular.module('infraApp', [
         'ui.router',
         'ui.bootstrap',
         'chart.js',
+        'smart-table',
         'infraApp.dashboard',
         'infraApp.directives',
         'infraApp.resources'
@@ -28,6 +29,10 @@
             url : '/client',
             controller : 'clientDashboardController',
             templateUrl : 'app/modules/dashboard/client/clientDashboard.html'
+        }).state('ec2Details',{
+            url : '/ec2Details',
+            controller : 'ec2DetailsController',
+            templateUrl : 'app/modules/resourceDetails/ec2/ec2Details.html'
         });
     });
 

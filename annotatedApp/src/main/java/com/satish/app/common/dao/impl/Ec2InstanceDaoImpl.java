@@ -1,10 +1,14 @@
 package com.satish.app.common.dao.impl;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -19,6 +23,8 @@ import com.satish.app.domain.EC2Instance;
 @Repository(value="EC2InstanceDao")
 @Transactional
 public class Ec2InstanceDaoImpl extends GenericHibernateDao<EC2Instance, Long> implements EC2InstanceDao{
+	
+	private static Logger logger = Logger.getLogger(Ec2InstanceDaoImpl.class);
 	
 	@Autowired
 	public Ec2InstanceDaoImpl(SessionFactory sessionFactory) {
@@ -52,6 +58,17 @@ public class Ec2InstanceDaoImpl extends GenericHibernateDao<EC2Instance, Long> i
 		return criteria.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EC2Instance> getAliveInstancesByIds(List<String> instanceIds){
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(EC2Instance.class);
+		criteria.add(Restrictions.eq("dead", false));
+		criteria.add(Restrictions.in("instanceId", instanceIds));
+		return criteria.list();
+	}
+	
+	
 	@Override
 	public Set<String> getAllAliveInstanceIds(){
 		Session session = getSession();
@@ -65,6 +82,22 @@ public class Ec2InstanceDaoImpl extends GenericHibernateDao<EC2Instance, Long> i
 			ids.add(instance.getInstanceId());
 		}	
 		return ids;		
+	}
+	
+	@Override
+	public int markInstancesAsDead(Collection<String> instanceIds, Date date){
+		Session session = getSession();
+		
+		String updateQuery = "update EC2Instance set dead = :isDead, deadDate = :date where instanceId in (:ids)";		
+		Query query = session.createQuery(updateQuery);
+		query.setBoolean("isDead", true);
+		query.setDate("date", date);
+		query.setParameterList("ids", instanceIds);
+		
+		int rowsModified = query.executeUpdate();
+		logger.info("Asked to update: " + instanceIds.size() + " and updated " + rowsModified);
+		
+		return rowsModified;
 	}
 	
 	

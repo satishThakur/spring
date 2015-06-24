@@ -11,10 +11,10 @@
             ['fa','fa-arrows','fa-2x'],['fa','fa-bitbucket','fa-2x']];
 
         var instanceStylesMapping = {
-            rds : instanceStyles[0],
-            ec2 : instanceStyles[1],
-            elb : instanceStyles[2],
-            s3 : instanceStyles[3]
+            rdsInstancesCount : instanceStyles[0],
+            ec2InstancesCount : instanceStyles[1],
+            elbInstancesCount : instanceStyles[2],
+            s3InstancesCount : instanceStyles[3]
         };
 
         var clientStyles = {

@@ -13,6 +13,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.support.TransactionTemplate;
 
 @Configuration
 @EnableTransactionManagement
@@ -49,5 +50,13 @@ public class RootConfig {
        txManager.setSessionFactory(s);
        return txManager;
     }
+	
+	
+	@Bean
+	@Autowired
+	public TransactionTemplate transactionTemplate(HibernateTransactionManager txManager){
+		TransactionTemplate txTemplate = new TransactionTemplate(txManager);
+		return txTemplate;
+	}
 
 }

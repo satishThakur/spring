@@ -83,7 +83,7 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 	private List<EC2Instance> getAllCurrentInstances(){
 		Date successData  = syncStatsService.getLastSuccessDate();
 		List<String> instanceIds = getAllInstanceIdsOnDate(successData);
-		return ec2InstanceDao.getInstancesByIds(instanceIds);
+		return ec2InstanceDao.getAliveInstancesByIds(instanceIds);
 	}
 
 	private List<String> getAllInstanceIdsOnDate(Date date){

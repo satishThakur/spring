@@ -1,5 +1,7 @@
 package com.satish.app.common.dao;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -15,5 +17,9 @@ public interface EC2InstanceDao extends HibernateDao<EC2Instance, Long>{
 	public List<EC2Instance> getInstancesByIds(List<String> instanceIds);
 
 	public Set<String> getAllAliveInstanceIds();
+
+	public int markInstancesAsDead(Collection<String> instanceIds, Date date);
+
+	List<EC2Instance> getAliveInstancesByIds(List<String> instanceIds);
 
 }

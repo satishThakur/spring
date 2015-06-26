@@ -1,44 +1,61 @@
-<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
-    <thead>
-    <tr>
-        <th st-sort="instanceId">Instance Id</th>
-        <th st-sort="type">Type</th>
-        <th st-sort="client">Client</th>
-        <th st-sort="system">System</th>
-        <th st-sort="env">Env</th>
-    </tr>
-    <tr>
-        <th>
-            <input st-search="instanceId" placeholder="search for instanceId" class="input-sm form-control" type="search"/>
-        </th>
-        <th>
-            <input st-search="type" placeholder="search for type" class="input-sm form-control" type="search"/>
-        </th>
-        <th>
-            <input st-search="client" placeholder="search for client" class="input-sm form-control" type="search"/>
-        </th>
-        <th>
-            <input st-search="system" placeholder="search for system" class="input-sm form-control" type="search"/>
-        </th>
-        <th>
-            <input st-search="env" placeholder="search for env" class="input-sm form-control" type="search"/>
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="row in displayedCollection">
-        <td>{{row.instanceId}}</td>
-        <td>{{row.instanceType}}</td>
-        <td>{{row.client}}</td>
-        <td>{{row.system}}</td>
-        <td>{{row.env}}</td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-        <td colspan="5" class="text-center">
-            <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
-        </td>
-    </tr>
-    </tfoot>
-</table>
+<div class="row">
+    <div class="col-lg-12">
+
+        <h1 class="page-header tag-header">
+            <i class="fa fa-tasks"></i>
+            <span> All EC2 Instances</span>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+
+
+
+        <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+            <thead>
+            <tr>
+                <th st-sort="instanceId">Instance Id</th>
+                <th st-sort="type">Type</th>
+                <th st-sort="client">Client</th>
+                <th st-sort="system">System</th>
+                <th st-sort="env">Env</th>
+            </tr>
+            <tr>
+                <th>
+                    <input st-search="instanceId" placeholder="search for instanceId" class="input-sm form-control" type="search"/>
+                </th>
+                <th>
+                    <input st-search="type" placeholder="search for type" class="input-sm form-control" type="search"/>
+                </th>
+                <th>
+                    <input st-search="client" placeholder="search for client" class="input-sm form-control" type="search"/>
+                </th>
+                <th>
+                    <input st-search="system" placeholder="search for system" class="input-sm form-control" type="search"/>
+                </th>
+                <th>
+                    <input st-search="env" placeholder="search for env" class="input-sm form-control" type="search"/>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in displayedCollection">
+                <td>{{row.instanceId}}</td>
+                <td>{{row.instanceType}}</td>
+                <td>{{row.client}}</td>
+                <td>{{row.system}}</td>
+                <td>{{row.env}}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>

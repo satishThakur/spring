@@ -233,3 +233,11 @@ ul.alert-dropdown {
 .searchBox{
     margin-bottom: 20px;
 }
+
+.tag-header{
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    font-weight: normal;
+    line-height: 1;
+}

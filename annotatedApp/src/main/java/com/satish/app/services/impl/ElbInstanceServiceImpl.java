@@ -56,7 +56,8 @@ public class ElbInstanceServiceImpl implements ElbService{
 		return elbInstanceDao.getInstancesInRegion(regionName);
 	}
 
-	private List<ElbInstance> getAllCurrentInstances(){
+	@Override
+	public List<ElbInstance> getAllCurrentInstances(){
 		Date successData  = syncStatsService.getLastSuccessDate();
 		List<String> instanceIds = getAllElbNamesOnDate(successData);
 		return elbInstanceDao.getInstancesByNames(instanceIds);

@@ -59,7 +59,8 @@ public class RdsInstanceServiceImpl implements RdsService{
 		return rdsInstanceDao.findAllInstancesInRegion(region);
 	}
 
-	private List<RdsInstance> getAllCurrentInstances(){
+	@Override
+	public List<RdsInstance> getAllCurrentInstances(){
 		Date successData  = syncStatsService.getLastSuccessDate();
 		return getAllInstanceIdsOnDate(successData);
 

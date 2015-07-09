@@ -1,0 +1,9 @@
+prod 
+beta
+uat
+pilot
+qa
+infra
+demo
+internal
+testm

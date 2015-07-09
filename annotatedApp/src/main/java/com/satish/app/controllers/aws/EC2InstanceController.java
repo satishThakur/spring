@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.satish.app.common.filter.Filter;
 import com.satish.app.domain.EC2Instance;
 import com.satish.app.model.InstanceInfo;
+import com.satish.app.model.InstanceTagsInfo;
 import com.satish.app.services.Ec2Service;
 import com.satish.app.services.FilterService;
+import com.satish.app.services.TaggingService;
 
 @RestController
 @RequestMapping("/aws/instances")
@@ -25,6 +27,9 @@ public class EC2InstanceController {
 	
 	@Autowired
 	private FilterService filterService;
+	
+	@Autowired
+	private TaggingService taggingService;
 	
 	@RequestMapping(method=RequestMethod.GET,produces="application/json")
 	public Collection<EC2Instance> getAllInstances(@RequestParam(value="system", defaultValue="") List<String> systems,
@@ -40,6 +45,11 @@ public class EC2InstanceController {
 	@RequestMapping(value="{region}",method=RequestMethod.GET,produces="application/json")
 	public List<EC2Instance> getInstancesInRegion(@PathVariable("region") String regionName){
 		return ec2Service.getInstancesInRegion(regionName);
+	}
+	
+	@RequestMapping(value="untagged",method=RequestMethod.GET,produces="application/json")
+	public List<InstanceTagsInfo<EC2Instance>> getUntaggedInstancesInRegion(@RequestParam(value="region", defaultValue="") List<String> region){
+		return taggingService.getUntaggedEc2Instances();
 	}
 	
 }

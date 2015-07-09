@@ -80,7 +80,8 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 		return new RegionStats(regionCount);
 	}
 
-	private List<EC2Instance> getAllCurrentInstances(){
+	@Override
+	public List<EC2Instance> getAllCurrentInstances(){
 		Date successData  = syncStatsService.getLastSuccessDate();
 		List<String> instanceIds = getAllInstanceIdsOnDate(successData);
 		return ec2InstanceDao.getAliveInstancesByIds(instanceIds);
@@ -110,5 +111,6 @@ public class Ec2InstanceServiceImpl implements Ec2Service{
 		}
 		return clientsCount;
 	}
+	
 
 }

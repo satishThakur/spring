@@ -1,6 +1,7 @@
 package com.satish.app.services;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import com.satish.app.common.filter.Filter;
@@ -19,5 +20,7 @@ public interface RdsService {
 	RegionStats getRdsCurrentStats();
 
 	Map<String, Integer> getClientsStats();
+	
+	public List<RdsInstance> getAllCurrentInstances();
 
 }

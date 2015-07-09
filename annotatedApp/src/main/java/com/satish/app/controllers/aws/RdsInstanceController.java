@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amazonaws.regions.Region;
@@ -20,8 +21,10 @@ import com.amazonaws.services.rds.model.DescribeDBInstancesResult;
 import com.amazonaws.services.rds.model.ListTagsForResourceRequest;
 import com.amazonaws.services.rds.model.ListTagsForResourceResult;
 import com.satish.app.domain.RdsInstance;
+import com.satish.app.model.InstanceTagsInfo;
 import com.satish.app.services.FilterService;
 import com.satish.app.services.RdsService;
+import com.satish.app.services.TaggingService;
 import com.satish.app.util.ArnUtils;
 import com.satish.app.util.ConverterUtils;
 import com.satish.app.util.RegionsUtils;
@@ -36,6 +39,9 @@ public class RdsInstanceController {
 	
 	@Autowired
 	private FilterService filterService;
+	
+	@Autowired
+	private TaggingService taggingService;
 	
 
 	@RequestMapping(method=RequestMethod.GET,produces="application/json")
@@ -52,6 +58,10 @@ public class RdsInstanceController {
 		return getAllRdsInstancesInRegion(region);
 	}
 
+	@RequestMapping(value="untagged",method=RequestMethod.GET,produces="application/json")
+	public List<InstanceTagsInfo<RdsInstance>> getUntaggedInstancesInRegion(@RequestParam(value="region", defaultValue="") List<String> region){
+		return taggingService.getUntaggedRdsInstances();
+	}
 
 
 	private List<RdsInstance> getAllRdsInstancesInRegion(Region region){

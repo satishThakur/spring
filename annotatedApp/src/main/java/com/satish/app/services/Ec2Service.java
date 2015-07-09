@@ -21,4 +21,7 @@ public interface Ec2Service {
 
 	public Map<String, Integer> getAllClientsStats();
 
+	public List<EC2Instance> getAllCurrentInstances();
+	
+
 }
